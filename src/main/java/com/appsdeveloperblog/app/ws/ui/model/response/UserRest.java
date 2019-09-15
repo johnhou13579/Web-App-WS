@@ -1,39 +1,43 @@
-package com.appsdeveloperblog.app.ws.ui.model.request;
+package com.appsdeveloperblog.app.ws.ui.model.response;
 
-public class UserDetailsRequestModel {
-	//Converting incoming JSON file to a Class
+public class UserRest {
+	//Converting Class to outgoing JSON file
 	
+	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String password;
-	
-	
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 
 }
