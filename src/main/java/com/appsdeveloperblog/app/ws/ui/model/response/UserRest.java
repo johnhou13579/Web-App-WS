@@ -1,5 +1,7 @@
 package com.appsdeveloperblog.app.ws.ui.model.response;
 
+import java.util.List;
+
 public class UserRest {
 	//Converting Class to outgoing JSON file
 	
@@ -7,6 +9,7 @@ public class UserRest {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private List<AddressesRest> addresses;
 
 	public String getUserId() {
 		return userId;
