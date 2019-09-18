@@ -1,5 +1,7 @@
 package com.appsdeveloperblog.app.ws.shared.dto;
 
+import com.appsdeveloperblog.app.ws.dto.UserDto;
+
 public class AddressDTO {
 	private long id;
 	private String addressId;
@@ -8,7 +10,7 @@ public class AddressDTO {
 	private String streetName;
 	private String postalCode;
 	private String type;
-	private String userDetails;
+	private UserDto userDetails;
 	
 	public long getId() {
 		return id;
@@ -46,10 +48,10 @@ public class AddressDTO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getUserDetails() {
+	public UserDto getUserDetails() {
 		return userDetails;
 	}
-	public void setUserDetails(String userDetails) {
+	public void setUserDetails(UserDto userDetails) {
 		this.userDetails = userDetails;
 	}
 	public String getAddressId() {
