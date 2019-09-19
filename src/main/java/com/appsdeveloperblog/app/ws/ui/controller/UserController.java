@@ -8,6 +8,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -128,8 +130,8 @@ public class UserController {
 
 	// http://localhost:8080/mobile-app-ws/users/idididid/addresses
 	@GetMapping(path = "/{id}/addresses", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE })
-	public List<AddressesRest> getUserAddresses(@PathVariable String id) {
+			MediaType.APPLICATION_JSON_VALUE, "application/hal+json" })
+	public Resources<AddressesRest> getUserAddresses(@PathVariable String id) {
 
 		List<AddressesRest> addressesListRestModel = new ArrayList<>();
 
@@ -151,12 +153,12 @@ public class UserController {
 			}
 		}
 
-		return addressesListRestModel;
+		return new Resources<>(addressesListRestModel);
 	}
 	
 	@GetMapping(path = "/{id}/addresses/{addressId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE })
-	public AddressesRest getUserAddress(@PathVariable String userId, @PathVariable String addressId) {
+			MediaType.APPLICATION_JSON_VALUE, "application/hal+json"})
+	public Resource<AddressesRest> getUserAddress(@PathVariable String userId, @PathVariable String addressId) {
 
 		AddressDTO addressesDto = addressService.getAddress(addressId);
 
@@ -172,6 +174,6 @@ public class UserController {
 		addressesRestModel.add(userLink);
 		addressesRestModel.add(addressesLink);;
 		
-		return addressesRestModel;
+		return new Resource<>(addressesRestModel);
 	}
 }
