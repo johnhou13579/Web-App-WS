@@ -1,6 +1,7 @@
 package com.appsdeveloperblog.app.ws.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -19,10 +20,14 @@ import com.appsdeveloperblog.app.ws.dto.UserDto;
 import com.appsdeveloperblog.app.ws.exceptions.UserServiceException;
 import com.appsdeveloperblog.app.ws.io.entity.UserEntity;
 import com.appsdeveloperblog.app.ws.io.repositories.UserRepository;
+import com.appsdeveloperblog.app.ws.security.SecurityConstants;
 import com.appsdeveloperblog.app.ws.service.UserService;
 import com.appsdeveloperblog.app.ws.shared.dto.AddressDTO;
 import com.appsdeveloperblog.app.ws.shared.dto.Utils;
 import com.appsdeveloperblog.app.ws.ui.model.response.ErrorMessages;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -57,6 +62,7 @@ public class UserServiceImpl implements UserService {
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userEntity.setEmailVertificationToken(utils.generateEmailVerificationToken(publicUserId));
 
 		// Saving User into database
 		UserEntity storedUserDetails = userRepository.save(userEntity);
@@ -174,6 +180,11 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return returnValue;
+	}
+	
+	public String generateEmailVerificationToken(String userId) {
+		String token = Jwts.builder().setSubject(userId).setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME)).signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
+		return token;
 	}
 
 }
