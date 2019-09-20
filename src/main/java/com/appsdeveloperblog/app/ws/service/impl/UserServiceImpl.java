@@ -93,7 +93,9 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null)
 			throw new UsernameNotFoundException(email);
 
-		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+		//return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+	
+		return new User(userEntity.getEmail(),userEntity.getEncryptedPassword(),userEntity.getEmailVerificationStatus(),true, true, true,new ArrayList<>());
 	}
 
 	@Override
@@ -182,9 +184,6 @@ public class UserServiceImpl implements UserService {
 		return returnValue;
 	}
 	
-	public String generateEmailVerificationToken(String userId) {
-		String token = Jwts.builder().setSubject(userId).setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME)).signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
-		return token;
-	}
+	
 
 }
