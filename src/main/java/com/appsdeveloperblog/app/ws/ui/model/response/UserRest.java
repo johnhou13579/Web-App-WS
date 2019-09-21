@@ -3,8 +3,8 @@ package com.appsdeveloperblog.app.ws.ui.model.response;
 import java.util.List;
 
 public class UserRest {
-	//Converting Class to outgoing JSON file
-	
+	// Converting Class to outgoing JSON file
+
 	private String userId;
 	private String firstName;
 	private String lastName;

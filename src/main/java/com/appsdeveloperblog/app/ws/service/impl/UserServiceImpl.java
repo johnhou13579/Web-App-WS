@@ -48,17 +48,17 @@ public class UserServiceImpl implements UserService {
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Record already exists");
 
-		for(int i =0; i<user.getAddresses().size();i++) {
+		for (int i = 0; i < user.getAddresses().size(); i++) {
 			AddressDTO address = user.getAddresses().get(i);
 			address.setUserDetails(user);
 			address.setAddressId(utils.generateAddressId(30));
 			user.getAddresses().set(i, address);
 		}
-		
-		//BeanUtils.copyProperties(user, userEntity);
+
+		// BeanUtils.copyProperties(user, userEntity);
 		ModelMapper modelMapper = new ModelMapper();
 		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-		
+
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -67,9 +67,9 @@ public class UserServiceImpl implements UserService {
 		// Saving User into database
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
-		//BeanUtils.copyProperties(storedUserDetails, returnValue);
+		// BeanUtils.copyProperties(storedUserDetails, returnValue);
 		UserDto returnValue = modelMapper.map(storedUserDetails, UserDto.class);
-		
+
 		return returnValue;
 	}
 
@@ -93,9 +93,11 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null)
 			throw new UsernameNotFoundException(email);
 
-		//return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
-	
-		return new User(userEntity.getEmail(),userEntity.getEncryptedPassword(),userEntity.getEmailVerificationStatus(),true, true, true,new ArrayList<>());
+		// return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new
+		// ArrayList<>());
+
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(),
+				userEntity.getEmailVerificationStatus(), true, true, true, new ArrayList<>());
 	}
 
 	@Override
@@ -147,34 +149,34 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getUsers(int page, int limit) {
 
 		List<UserDto> returnValue = new ArrayList<>();
-		
-		if(page>0) page--;
-		
-		Pageable pageableRequest = PageRequest.of(page,  limit);
-		
+
+		if (page > 0)
+			page--;
+
+		Pageable pageableRequest = PageRequest.of(page, limit);
+
 		Page<UserEntity> usersPage = userRepository.findAll(pageableRequest);
 		List<UserEntity> users = usersPage.getContent();
-		
-		for(UserEntity userEntity : users) {
+
+		for (UserEntity userEntity : users) {
 			UserDto userDto = new UserDto();
-			BeanUtils.copyProperties(userEntity,  userDto);
+			BeanUtils.copyProperties(userEntity, userDto);
 			returnValue.add(userDto);
 		}
-		
+
 		return returnValue;
 	}
 
 	@Override
 	public boolean verifyEmailToken(String token) {
-		
+
 		boolean returnValue = false;
-		
+
 		UserEntity userEntity = userRepository.findUserByEmailVerificationToken(token);
-		
-		if(userEntity!=null)
-		{
+
+		if (userEntity != null) {
 			boolean hastokenExpired = Utils.hasTokenExpired(token);
-			if(!hastokenExpired) {
+			if (!hastokenExpired) {
 				userEntity.setEmailVertificationToken(null);
 				userEntity.setEmailVerificationStatus(Boolean.TRUE);
 				userRepository.save(userEntity);
@@ -183,7 +185,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return returnValue;
 	}
-	
-	
 
 }
