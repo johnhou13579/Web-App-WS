@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
 			return returnValue;
 		}
 		
-		String token = Utils.generatePasswordResetToken(userEntity.getUserId());
+		String token = new Utils().generatePasswordResetToken(userEntity.getUserId());
 		
 		PasswordResetTokenEntity passwordResetTokenEntity = new PasswordResetTokenEntity();
 		passwordResetTokenEntity.setToken(token);
