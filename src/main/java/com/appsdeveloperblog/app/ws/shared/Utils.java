@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.app.ws.shared.dto;
+package com.appsdeveloperblog.app.ws.shared;
 
 import java.security.SecureRandom;
 import java.util.Date;

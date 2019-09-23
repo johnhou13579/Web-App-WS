@@ -1,9 +1,7 @@
-package com.appsdeveloperblog.app.ws.dto;
+package com.appsdeveloperblog.app.ws.shared.dto;
 
 import java.io.Serializable;
 import java.util.List;
-
-import com.appsdeveloperblog.app.ws.shared.dto.AddressDTO;
 
 public class UserDto implements Serializable {
 	private static final long serialVersionUID = 4865903039190150223L;
@@ -14,7 +12,7 @@ public class UserDto implements Serializable {
 	private String email;
 	private String password;
 	private String encryptedPassword;
-	private String emailVertificationToken;
+	private String emailVerificationToken;
 	private Boolean emailVerificationStatus = false;
 	private List<AddressDTO> addresses;
 
@@ -74,12 +72,12 @@ public class UserDto implements Serializable {
 		this.encryptedPassword = encryptedPassword;
 	}
 
-	public String getEmailVertificationToken() {
-		return emailVertificationToken;
+	public String getEmailVerificationToken() {
+		return emailVerificationToken;
 	}
 
-	public void setEmailVertificationToken(String emailVertificationToken) {
-		this.emailVertificationToken = emailVertificationToken;
+	public void setEmailVerificationToken(String emailVertificationToken) {
+		this.emailVerificationToken = emailVertificationToken;
 	}
 
 	public Boolean getEmailVerificationStatus() {

@@ -1,7 +1,5 @@
 package com.appsdeveloperblog.app.ws.shared.dto;
 
-import com.appsdeveloperblog.app.ws.dto.UserDto;
-
 public class AddressDTO {
 	private long id;
 	private String addressId;
